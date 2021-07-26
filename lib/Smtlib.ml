@@ -109,13 +109,13 @@ let make_solver (z3_path : string) : solver =
      when our main ocaml process ends. *)
   let _ = set_close_on_exec z3_stdin_writer; set_close_on_exec z3_stdout_reader in
   let pid =
-    if Core.String.is_substring z3_path ~substring:"boolector" then begin
-        create_process z3_path [| z3_path; "--smt2"; "-m"; "-i" |]
-          z3_stdin z3_stdout stderr
-      end else begin
+    (* if Core.String.is_substring z3_path ~substring:"boolector" then begin *)
+        (* create_process z3_path [| z3_path; "--smt2"; "-m"; "-i" |] *)
+          (* z3_stdin z3_stdout stderr *)
+      (* end else begin *)
         create_process z3_path [| z3_path; "-in"; "-smt2" |]
           z3_stdin z3_stdout stderr
-      end
+      (* end *)
   in
   let in_chan = in_channel_of_descr z3_stdout_reader in
   let out_chan = out_channel_of_descr z3_stdin_writer in
