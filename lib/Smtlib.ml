@@ -239,7 +239,7 @@ let rec term_to_sexp (term : term) : sexp = match term with
            SList [SList [SSymbol x; term_to_sexp term1]];
            term_to_sexp term2]
 
-let sexp_to_term (sexp : sexp) : term = match sexp with
+let rec sexp_to_term (sexp : sexp) : term = match sexp with
   | SString s -> String s
   | SInt n -> Int n
   | SBitVec (n, w) -> BitVec (n, w)
@@ -247,6 +247,7 @@ let sexp_to_term (sexp : sexp) : term = match sexp with
   | SBigBitVec (n,w) -> BigBitVec (n, w)
   | SSymbol x -> Const (Id x)
   | SList (SSymbol "-" :: SInt x :: []) -> Int (-x)
+  | SList (SSymbol x :: xs) -> App (Id x, List.map sexp_to_term xs)
   | _ -> failwith "unparsable term"
 
 let expect_success (solver : solver) (sexp : sexp) : unit =
