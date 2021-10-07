@@ -14,7 +14,7 @@ let sexp_to_string (sexp : sexp) : string =
     | SBitVec (n, w) -> add_string buf (Format.sprintf "(_ bv%d %d)" n w)
     | SBitVec64 n -> add_string buf (Format.sprintf "(_ bv%Ld 64)" n)
     | SBigBitVec (n, w) -> add_string buf (Format.sprintf "(_ bv%s %s)"
-                                             (Bigint.to_string n)
+                                             (Z.to_string n)
                                              (string_of_int w))
   and list_to_string (alist : sexp list) : unit = match alist with
     | [] -> ()
@@ -29,7 +29,7 @@ let rec write_sexp (out_chan : out_channel) (e : sexp): unit = match e with
   | SBitVec (n, w) -> Printf.fprintf out_chan "(_ bv%d %d)" n w
   | SBitVec64 n -> Printf.fprintf out_chan "(_ bv%Ld 64)" n
   | SBigBitVec (n, w) -> Printf.fprintf out_chan "(_ bv%s %s)"
-                           (Bigint.to_string n) (string_of_int w)
+                           (Z.to_string n) (string_of_int w)
   | SSymbol str -> output_string out_chan str
   | SKeyword str -> output_string out_chan str
   | SString str ->
@@ -160,7 +160,7 @@ type term =
   | Int of int
   | BitVec of int * int
   | BitVec64 of int64
-  | BigBitVec of Bigint.t * int
+  | BigBitVec of Z.t * int
   | Const of identifier
   | ForAll of (identifier * sort) list * term
   | App of identifier * term list

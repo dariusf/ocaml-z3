@@ -34,7 +34,7 @@ type term =
   | Int of int
   | BitVec of int * int
   | BitVec64 of int64
-  | BigBitVec of Bigint.t * int
+  | BigBitVec of Z.t * int
   | Const of identifier
   | ForAll of (identifier * sort) list * term
   | App of identifier * term list
@@ -183,7 +183,7 @@ val bv : int -> int -> term
 val bv64 : int64 -> term
 
 (** [bbv n w] produces a bit-vector of width [w] that represents an arbitrary-precision integer [n]. *)
-val bbv : Bigint.t -> int -> term
+val bbv : Z.t -> int -> term
 
 val bvadd : term -> term -> term
 val bvsub : term -> term -> term
@@ -221,7 +221,7 @@ type sexp = Smtlib_syntax.sexp =
   | SInt of int
   | SBitVec of int * int
   | SBitVec64 of int64
-  | SBigBitVec of Bigint.t * int
+  | SBigBitVec of Z.t * int
 
 (** [command solver sexp] sends a command to the solver and reads a response. *)
 val command : solver -> sexp -> sexp

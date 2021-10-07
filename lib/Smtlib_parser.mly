@@ -8,7 +8,7 @@ open Smtlib_syntax
 %token<string> KEYWORD
 %token<int> INT
 %token<int * int> HEX
-%token<Bigint.t * int> BIGHEX
+%token<Z.t * int> BIGHEX
 %token EOF
 
 %start sexp

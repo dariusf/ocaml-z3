@@ -6,4 +6,4 @@ type sexp =
   | SInt of int
   | SBitVec of int * int
   | SBitVec64 of int64
-  | SBigBitVec of Bigint.t * int
+  | SBigBitVec of Z.t * int
