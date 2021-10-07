@@ -70,6 +70,8 @@ val declare_fun : solver -> identifier -> sort list -> sort -> unit
 (** [declare_sort solver x arity] runs the command [(declare-sort x arity)] *)
 val declare_sort : solver -> identifier -> int -> unit
 
+val declare_datatype : solver -> identifier -> (identifier * (identifier * sort) list) list -> unit
+
 (** [assert_ solver term] runs the command [(assert term)] *)
 val assert_ : solver -> term -> unit
 

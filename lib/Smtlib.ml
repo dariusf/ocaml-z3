@@ -269,6 +269,16 @@ let declare_sort (solver : solver) (id : identifier) (arity : int) : unit =
   expect_success solver
     (SList [SSymbol "declare-sort"; id_to_sexp id; SInt arity])
 
+let declare_datatype (solver : solver) (id : identifier) (constrs : (identifier * (identifier * sort) list) list) : unit =
+  let constr_dec = SList (constrs
+    |> List.map (fun (c, p) ->
+      SList (id_to_sexp c :: (List.map (fun (i, s) ->
+        SList [id_to_sexp i; sort_to_sexp s]) p))))
+  in
+  let datatype_dec = constr_dec in
+  expect_success solver
+    (SList [SSymbol "declare-datatype"; id_to_sexp id; datatype_dec])
+
 let assert_ (solver : solver) (term : term) : unit =
   expect_success solver (SList [SSymbol "assert"; term_to_sexp term])
 
